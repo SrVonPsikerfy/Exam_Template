@@ -3,36 +3,18 @@
 
 <head>
     <meta charset="UTF-8">
-    <link rel="shortcut icon" href="player.png" type="image/png" />
+    <link rel="shortcut icon" href="star.png" type="image/png" />
     <meta name="viewport" content="width=device-width, initial-scale=2.0">
     <link rel="stylesheet" href="game.css">
-    <script src="phaser.min.js"></script>
+    <!-- Libreria Phaser -->
+    <script src="//cdn.jsdelivr.net/npm/phaser@3.24.1/dist/phaser.js"></script>
 
-    <title>¡Juego con Phaser!</title>
+    <title>Examen PVLI 2020-2021</title>
 </head>
 
 <body>
-    <h1>Juego con Phaser</h1>
-    <script type="module">
-        import Scene from './scene.js'
-        import End from './end.js'
-        import Boot from './boot.js'
-
-        var config = {
-            type: Phaser.AUTO,
-            width:  1000,
-            height: 500,
-            scale: {
-                // mode: Phaser.Scale.FIT,  
-                autoCenter: Phaser.Scale.CENTER_HORIZONTALLY
-            },
-            pixelArt: true,
-            scene: [Boot, Scene, End],
-            physics: { default: 'arcade', arcade: { gravity: { y: 400 }, debug: false } }
-        };
-
-        new Phaser.Game(config);
-    </script>
+    <h1>Examen PVLI 2020-2021</h1>
+    <script script type="module" src ="./main.js"></script>
 </body>
 
 </html>
