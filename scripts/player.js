@@ -1,5 +1,3 @@
-import Star from './star.js'
-
 export default class Player extends Phaser.GameObjects.Sprite {
   constructor(scene, x, y) {
     super(scene, x, y, 'player');
@@ -13,6 +11,7 @@ export default class Player extends Phaser.GameObjects.Sprite {
     this.cursors = this.scene.input.keyboard.createCursorKeys();
     this.updateScore();
   }
+  
   point() {
     this.score++;
     this.updateScore();

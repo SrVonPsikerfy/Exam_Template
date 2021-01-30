@@ -1,11 +1,9 @@
-
-
 export default class End extends Phaser.Scene {
   constructor() {
     super({ key: 'end' });
   }
-  preload() {
-  }
+
+  preload() { }
 
   create() {
     this.add.text(10, 10, 'Se acabó!');

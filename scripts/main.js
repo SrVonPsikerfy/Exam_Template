@@ -1,5 +1,5 @@
 import Scene from './scene.js'
-import End from './end.js'
+import EndScene from './end_scene.js'
 import Boot from './boot.js'
 
 new Phaser.Game({
@@ -11,12 +11,12 @@ new Phaser.Game({
         autoCenter: Phaser.Scale.CENTER_HORIZONTALLY
     },
     pixelArt: true,
-    scene: [Boot, Scene, End],
+    scene: [Boot, Scene, EndScene],
     physics: {
         default: 'arcade',
         arcade: {
             gravity: { y: 400 },
-            debug: false
+            debug: true
         }
     }
 });
