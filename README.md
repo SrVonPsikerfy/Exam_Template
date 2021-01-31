@@ -1,53 +1,37 @@
-# Exam_Template
- Built differently
-
-//Chuletaca gorda
-COMENZAR CON CONSOLA:
+# COMENZAR CON CONSOLA:
 (Si no empiezas en el sitio correcto cd para moverte)
-
 -ESTAR EN EL SITIO DE LA CARPETA Y npx http-server / npx live-server
 
 
-
+# ADICION BASICA DE ELEMENTOS
 this.scene.add.existing(this); //Para que se renderice (Sprites)
 this.scene.physics.add.existing(this, true); (Si no tira el anterior)
 
-//CARGAR UN TILEMAP
+# CARGAR UN TILEMAP
  this.load.tilemapTiledJSON('tilemap_level1', 'src/assets/tiles/level1.json');
-
-
  this.load.image('tiles', './assets/sprites/tilesets/slates_tileset.png');
-    
 
- (LevelBoss linea 34)
-
- //CARGAR UNA IMAGEN
+# CARGAR UNA IMAGEN
  this.load.image('feather', 'src/assets/sprites/unamuno/feather.png');
 
-
-//CARGAR UN AUDIO
+# CARGAR UN AUDIO
 this.load.audio('bandaSonora','src/assets/sonido/bandasonoracompr.mp3');
 
-(Comienzo de sonido en gameScene.js linea 104-114)
-
-
-//Timer                                                                     
+# TIMER                                                                     
     //Timer de phaser
     var timer = scene.time.addEvent({                                       
       delay: this.time,                // ms
       callback: () => {
-          Tu puta función con ;
+          funcion();
         }
-
       },
       loop: true
     });
 
     Si le metes un repeat lo hace x veces
 
-    //PARA LAS ANIMACIONES HACER EL SUPER.PREUPDATE
-
-    //CREAR UNA ANIMACION
+# CREAR UNA ANIMACION
+## ANIMACIONES HACER EL SUPER.PREUPDATE
     this.anims.create({
       key: 'Nombre que quieres para la anim',
       frames: this.anims.generateFrameNumbers('Nombre del SpriteSheet', { start: 0, end: x }),
@@ -55,12 +39,10 @@ this.load.audio('bandaSonora','src/assets/sonido/bandasonoracompr.mp3');
       repeat: 0
     });
 
+# PLAYEAR UNA ANIMACION
+    this.anims.play('Boss_Death',true); //true indica que no solapa si hay alguien haciendo animacion
 
-    //PLAYEAR UNA ANIMACION
-    this.anims.play('Boss_Death',true);
-
-
-    //CARGAR UN SpriteSheet
+# CARGAR UN SpriteSheet
     this.load.spritesheet({
       key: 'Nombre que quieres que tenga el spritesheet',
       url: 'Dirección del motherfucking asset',
@@ -70,19 +52,23 @@ this.load.audio('bandaSonora','src/assets/sonido/bandasonoracompr.mp3');
       }
     });
 
-
-    //HACER COSAS CUANDO TERMINA LA ANIMACION
+# HACER COSAS CUANDO TERMINA LA ANIMACION
     this.boss.on('animationcomplete', function (anim, frame) {
       this.boss.emit('animationcomplete_' + anim.key, anim, frame);
     }, this);
-    this.boss.on('animationcomplete_Boss_attk1', () => {
+
+# ASÍ ES PARA QUE SEA ANÓNIMA LA FUNCIÓN YO QUE SE
+    this.boss.on('animationcomplete-Boss_attk1', () => {
       this.boss.states.atacando = false;
       this.boss.states.idle = true;
     });
 
+# ANIMACION REPETIDA
+this.boss.on('animationrepeat', function (anim, frame) {
+      this.boss.emit('animationrepeat_' + anim.key, anim, frame);
+    }, this);
 
-
-    //Partículas
+# PARTICULAS
     let leaves = this.add.particles(particleSprite);
     leaves.createEmitter({
         frames: [{key: particleSprite, frame: 0}],
@@ -97,81 +83,56 @@ this.load.audio('bandaSonora','src/assets/sonido/bandasonoracompr.mp3');
     });
   }
 
-
-
-  //CARGAR UNA FUENTE 
-
+# CARGAR UNA FUENTE 
   this.load.bitmapFont('dialogue_font','src/assets/fonts/dialogue.png','src/assets/fonts/dialogue.xml');
 
-
-
-  //HACER ALGO CUANDO LA CÁMARA TERMINE DE HACER FADEOUT
+# HACER ALGO CUANDO LA CÁMARA TERMINE DE HACER FADEOUT
   this.cameras.main.once(Phaser.Cameras.Scene2D.Events.FADE_OUT_COMPLETE, () => {
       this.scene.start('level1');
     });
 
-
-
-    //AÑADIR TECLAS 
+# AÑADIR TECLAS 
     this.keycodeC = this.scene.input.keyboard.addKey(Phaser.Input.Keyboard.KeyCodes.C);
     this.keycodeV = this.scene.input.keyboard.addKey(Phaser.Input.Keyboard.KeyCodes.V);
     this.keycodeF = this.scene.input.keyboard.addKey(Phaser.Input.Keyboard.KeyCodes.F);
 
-
-    //INPUT SOLO UNA VEZ
+# INPUT SOLO UNA VEZ
     Phaser.Input.Keyboard.JustDown(this.keycodeV);
 
-
-    //Plantillas 
+# PLANTILLAS 
     https://github.com/cleongh/phasertemplate.git (Plantilla sin nada)
     https://github.com/cleongh/simplephasergame.git (Plantilla sencillita de señor que ya se mueve)
 
-
-    // CREAR EVENTOS CUANDO UNA TECLA ES PULSADA
+# CREAR EVENTOS CUANDO UNA TECLA ES PULSADA
     this.space.on('down',() => {
       this.scene.start('scene');
       //this.space.resetkey(); (ESO IGUAL SI IGUAL NO)
     })
 
+# COLISIONES SI QUIERES QUE HAGA ALGO ASÍ
+  this.scene.physics.add.collider(this.player, this, () => {      
+    this.clonateBola(this.x, this.y);  
+  });
+  this.scene.physics.add.overlap(this.player, this, () => {      
+    this.clonateBola(this.x, this.y);  
+  });
 
-    //COLISIONES SI QUIERES QUE HAGA ALGO ASÍ (En el create hijo de la grandísima)
-    this.scene.physics.add.collider(this.player, this, () => {      
-      this.clonateBola(this.x, this.y);  
-    });
-lo mismo pero con overlap si no quieres que se muevan las movidas crack
+# COLLISIONES ENTRE DOS COSAS SIN HACER NADA MAS
+  this.scene.physics.add.collider(this, player); 
 
+# CREAR GRUPOS FíSICOS
+  this.walls = this.physics.add.staticGroup(); //ASÍ SE CREA UN GRUPO ESTÁTICO
 
-    //COLLISIONES ENTRE DOS COSAS SIN HACER NADA MAS
-    this.scene.physics.add.collider(this, player); 
+# UN RANDOM ENTRE DOS MIERDAS
+  Phaser.Math.RND.pick(from || this.bases.children.entries);
+  Phaser.Math.Between(2000,4000)
 
-
-    //CREAR GRUPOS FíSICOS
-    this.walls = this.physics.add.staticGroup();        //ASÍ SE CREA UN GRUPO ESTÁTICO
-
-
-    //UN RANDOM ENTRE DOS MIERDAS
-    Phaser.Math.RND.pick(from || this.bases.children.entries).spawn();
-    (Lo mismo pero sin autismo)
-    Phaser.Math.Between(2000,4000)
-
-
-    //HACER EL TILEMAP (DRIVE)
+# HACER EL TILEMAP (DRIVE)
     
-
-
-    //COLISION CON UN LAYER
+# COLISION CON UN LAYER
     setCollisionByProperty(atributo que le añadiste en el tiled);
 
-
-   
-
-
-
-
-
-
- //FOR CHULAZO 
-
+# FOR CHULAZO 
     for (const objeto of this.map.getObjectLayer('objectLayer').objects) {
             // 'objeto.name' u 'objeto.type' nos llegan de las propiedades del
             // objeto en Tiled
@@ -183,3 +144,42 @@ lo mismo pero con overlap si no quieres que se muevan las movidas crack
                 this.player = new Player(this.matter.world, objeto.x, objeto.y, objeto, savedFaith, 2.2);;
             }
         }
+
+# DELAYED CALL
+this.time.delayedCall(2, () => { this.scene.restart(); })
+
+
+# INIT 
+init(data){
+  this.information = data;
+}
+
+# CAMBIAR COSAS DE COLOR
+[https://htmlcolorcodes.com/es/] (https://www.google.com)
+this.setTint('0x0c9ead');
+
+# INPUT DE RATÓN
+this.on('pointerover',() => {
+      console.log('Hola soy el chocu y estoy pasando por enicma');
+    });
+this.on('pointerout',() => {
+      console.log('Hola soy el chocu y he dejado de estar encima');
+    });
+this.on('pointerdown',() => {
+      console.log('Hola soy el chocu y he clickado');
+    });
+this.on('pointerup',() => {
+      console.log('Hola soy el chocu y he dejado de clickar');
+    });
+
+# PARA SABER QUE DOS OBJETOS CHOCAN
+this.scene.physics.add.collider(this, this.enemies, (o1, o2) => {
+  o2.destroy();
+  o1.destroy();
+})
+
+# ACCEDER A LA PUTA CAMARA
+this.scene.cameras.main
+
+# AÑADIR COLLIDER CIRCULAR
+this.body.setCircle(radio);
